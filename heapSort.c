@@ -1,62 +1,60 @@
 #include <stdio.h>
+#include <limits.h>
 
-void heapify(int arr[], int arraySize)
+void swap(int *a, int *b)
 {
-    int it;
-    for (it = arraySize / 2; it >= 1; it--)
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void heapify(int array[], int arraySize)
+{
+    int i;
+    for (i = arraySize / 2; i >= 1; i--)
     {
-        int child1 = it * 2;
-        int child2 = it * 2 + 1;
-        if (arr[child1] >= arr[child2])
+        int child1 = i * 2;
+        int child2 = i * 2 - 1;
+        if (array[child1] > array[child2])
         {
-            if (arr[child1] > arr[it])
+            if (array[child1] > array[i])
             {
-                int temp = arr[it];
-                arr[it] = arr[child1];
-                arr[child1] = temp;
+                swap(&array[i], &array[child1]);
             }
         }
         else
         {
-            if (arr[child2] > arr[it])
+            if (array[child2] > array[i])
             {
-                int temp = arr[it];
-                arr[it] = arr[child2];
-                arr[child2] = temp;
+                swap(&array[i], &array[child2]);
             }
         }
     }
 }
 
-void heapSort(int arr[], int arraySize)
+void heapSort(int array[], int arraySize)
 {
-    int arrayRange = arraySize;
-    printf("The sorted array is : \n");
-    while (arr[1] != -99999)
+    heapify(array, arraySize);
+    while (array[1] != INT_MIN)
     {
-        heapify(arr, arrayRange);
-        printf("%d ", arr[1]);
-        arr[1] = arr[arrayRange];
-        arr[arrayRange] = -99999;
-        arrayRange--;
+        printf("%d ", array[1]);
+        array[1] = INT_MIN;
+        heapify(array, arraySize);
     }
     printf("\n");
 }
 
 int main()
 {
-    int arraySize, it;
-    printf("Enter the size of the array : ");
+    int arraySize, i;
+    printf("Enter size of the array : ");
     scanf("%d", &arraySize);
-    int arr[arraySize + 1];
-    arr[0] = -99999;
-    for (it = 1; it <= arraySize; it++)
-    {
-        printf("Enter the %d element of the array : ", it + 2);
-        scanf("%d", &arr[it]);
-    }
-
-    heapSort(arr, arraySize);
-
+    int array[arraySize + 1];
+    array[0] = INT_MAX;
+    printf("Enter the elements of the array : \n");
+    for (i = 1; i <= arraySize; i++)
+        scanf("%d", &array[i]);
+    printf("The sorted array is : \n");
+    heapSort(array, arraySize);
     return 0;
 }

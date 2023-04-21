@@ -5,12 +5,12 @@ int max(int arr[], int start, int end)
     if (start == end)
         return arr[start];
     int mid = (start + end) / 2;
-    int p = max(arr, start, mid);
-    int q = max(arr, mid + 1, end);
-    if (p > q)
-        return p;
+    int a = max(arr, start, mid);
+    int b = max(arr, mid + 1, end);
+    if (a > b)
+        return a;
     else
-        return q;
+        return b;
 }
 
 int min(int arr[], int start, int end)
@@ -18,12 +18,12 @@ int min(int arr[], int start, int end)
     if (start == end)
         return arr[start];
     int mid = (start + end) / 2;
-    int p = min(arr, start, mid);
-    int q = min(arr, mid + 1, end);
-    if (p < q)
-        return p;
+    int a = min(arr, start, mid);
+    int b = min(arr, mid + 1, end);
+    if (a < b)
+        return a;
     else
-        return q;
+        return b;
 }
 
 int main()
