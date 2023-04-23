@@ -6,27 +6,25 @@ int vertices;
 
 void prims(int graph[vertices][vertices], int parent[], int edge[], bool visited[])
 {
-    int i, j, index;
-    for (int i = 0; i < vertices; i++)
+    int count;
+    for (count = 0; count < vertices; count++)
     {
-        int min = INT_MAX;
-        for (j = 0; j < vertices; j++)
+        int i, index = -1, min = INT_MAX;
+        for (i = 0; i < vertices; i++)
         {
-            if (edge[j] <= min && visited[j] == false)
+            if (visited[i] == false && edge[i] < min)
             {
-                min = edge[j];
-                index = j;
+                min = edge[i];
+                index = i;
             }
         }
         visited[index] = true;
-        for (j = 0; j < vertices; j++)
+        for (i = 0; i < vertices; i++)
         {
-            if (j == index)
-                continue;
-            if (graph[index][j] < edge[j] && graph[index][j] != 0)
+            if (graph[index][i] <= edge[i] && graph[index][i] != 0 && visited[i] == false)
             {
-                edge[j] = graph[index][j];
-                parent[j] = index;
+                edge[i] = graph[index][i];
+                parent[i] = index;
             }
         }
     }
@@ -47,6 +45,8 @@ void MST(int parent[], int edge[])
     int i;
     for (i = 0; i < vertices; i++)
     {
+        if (parent[i] == -1)
+            continue;
         printf("Node %d -> Node %d = %d\n", parent[i], i, edge[i]);
     }
 }
