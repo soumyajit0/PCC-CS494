@@ -1,43 +1,66 @@
 #include <stdio.h>
 #include <limits.h>
 
+int n;
+
 int min(int a, int b)
 {
     if (a < b)
+    {
         return a;
+    }
     return b;
 }
 
-int matrixMultiplication(int n, int array[])
+int MCM(int arr[], int i, int j, int dp[n + 1][n + 1])
 {
-    int dp[n][n];
-    int i, j, k, gap;
-    for (i = 0; i < n - 1; i++)
-        dp[i][i + 1] = 0;
-    for (gap = 2; gap < n; gap++)
+    if (i >= j - 1)
     {
-        for (i = 0; i + gap < n; i++)
-        {
-            j = i + gap;
-            dp[i][j] = INT_MAX;
-            for (k = i + 1; k < j; k++)
-            {
-                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + array[i] * array[j] * array[k]);
-            }
-        }
+        return 0;
     }
-    return dp[0][n - 1];
+    if (dp[i][j] != -1)
+    {
+        return dp[i][j];
+    }
+    int k;
+    int res = INT_MAX;
+    for (k = i + 1; k < j; k++)
+    {
+        res = min(res, MCM(arr, i, k, dp) + MCM(arr, k, j, dp) + arr[i] * arr[k] * arr[j]);
+    }
+    dp[i][j] = res;
+    return res;
 }
 
 int main()
 {
-    int n, i;
-    printf("Enter the value of n : ");
+    int i, j;
+    printf("Enter the no. of Matrices : ");
     scanf("%d", &n);
-    int array[n];
-    printf("Enter the Array : \n");
-    for (i = 0; i < n; i++)
-        scanf("%d", &array[i]);
-    printf("The Minimum No. of Multiplications needed : %d\n", matrixMultiplication(n, array));
+    int arr[n + 1];
+    printf("Enter the Dimensions of the Matrices : ");
+    for (i = 0; i <= n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+    if (n <= 1)
+    {
+        printf("The Minimum No. of Operations : 0\n");
+        return 0;
+    }
+    else if (n == 2)
+    {
+        printf("The Minimum No. of Operations : %d\n", arr[0] * arr[1] * arr[2]);
+        return 0;
+    }
+    int dp[n + 1][n + 1];
+    for (i = 0; i <= n; i++)
+    {
+        for (j = 0; j <= n; j++)
+        {
+            dp[i][j] = -1;
+        }
+    }
+    printf("The Minimum No. of Operations : %d\n", MCM(arr, 0, n, dp));
     return 0;
 }

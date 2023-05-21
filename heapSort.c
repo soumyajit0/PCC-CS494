@@ -14,17 +14,25 @@ void heapify(int array[], int arraySize)
     for (i = arraySize / 2; i >= 1; i--)
     {
         int child1 = i * 2;
-        int child2 = i * 2 - 1;
-        if (array[child1] > array[child2])
+        int child2 = i * 2;
+        if (arraySize & 1 == 1)
         {
-            if (array[child1] > array[i])
+            child2++;
+        }
+        else
+        {
+            child2--;
+        }
+        if (array[child1] < array[child2])
+        {
+            if (array[child1] < array[i])
             {
                 swap(&array[i], &array[child1]);
             }
         }
         else
         {
-            if (array[child2] > array[i])
+            if (array[child2] < array[i])
             {
                 swap(&array[i], &array[child2]);
             }
@@ -35,10 +43,10 @@ void heapify(int array[], int arraySize)
 void heapSort(int array[], int arraySize)
 {
     heapify(array, arraySize);
-    while (array[1] != INT_MIN)
+    while (array[1] != INT_MAX)
     {
         printf("%d ", array[1]);
-        array[1] = INT_MIN;
+        array[1] = INT_MAX;
         heapify(array, arraySize);
     }
     printf("\n");

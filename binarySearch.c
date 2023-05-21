@@ -15,14 +15,21 @@ int binarySearch(int arr[], int start, int end, int key)
 
 int main()
 {
-    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int n;
-    printf("Enter the element to be searched : ");
+    int key, n, i;
+    printf("Enter the no. of elements : ");
     scanf("%d", &n);
-    int in = binarySearch(arr, 0, sizeof(arr) / 4 - 1, n);
+    int arr[n];
+    printf("Enter the elements : ");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+    printf("Enter the element to be searched : ");
+    scanf("%d", &key);
+    int in = binarySearch(arr, 0, n - 1, key);
     if (in == -1)
         printf("Element not found\n");
     else
-        printf("Element is found at : %d index position\n", in);
+        printf("Element is found at : %d Index position\n", in);
     return 0;
 }
